@@ -1,0 +1,52 @@
+{
+    "binance": {
+        "axie_infinity": {
+            "Average": "11.45",
+            "Cap": "25.20",
+            "Coin": "axie_infinity",
+            "Current": "1.00",
+            "Earn": "1.00",
+            "PNL": "-91",
+            "PNL Earn": "-87",
+            "Path_to_photo": "D:\\Scripts (main)\\Pictures\\Investments\\AXIE INFINITY.png",
+            "Staked": "1.00",
+            "Total": "25.20"
+        },
+        "bitcoin": {
+            "Average": "6.50",
+            "Cap": "2.00",
+            "Coin": "bitcoin",
+            "Current": "1.00",
+            "Earn": "0.150",
+            "PNL": "-85",
+            "PNL Earn": "-78",
+            "Path_to_photo": "D:\\Scripts (main)\\Pictures\\Investments\\BITCOIN.png",
+            "Staked": "0.150",
+            "Total": "2.00"
+        },
+        "ethereum": {
+            "Average": "1500",
+            "Cap": "5.00",
+            "Coin": "ethereum",
+            "Current": "1.00",
+            "Earn": "0.300",
+            "PNL": "-100",
+            "PNL Earn": "-94",
+            "Path_to_photo": "D:\\Scripts (main)\\Pictures\\Investments\\ETHEREUM.png",
+            "Staked": "0.300",
+            "Total": "5.00"
+        },
+        "pancakeswap": {
+            "Average": "3.31",
+            "Cap": "245.0",
+            "Coin": "pancakeswap",
+            "Current": "1.00",
+            "Earn": "3.00",
+            "PNL": "-70",
+            "PNL Earn": "-69",
+            "Path_to_photo": "D:\\Scripts (main)\\Pictures\\Investments\\PANCAKESWAP.png",
+            "Staked": "3.00",
+            "Total": "245.0"
+        }
+    }
+}
