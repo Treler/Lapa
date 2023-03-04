@@ -6,7 +6,8 @@ from ui_investments.loop_diagram import Example
 from ui_investments.inv_backend import insert_data_to_all_tables, create_loop_diagram, NumberSortModel
 from ui_profile.animated_toggle import AnimatedToggle
 from ui_investments.inv_sql import select_all_databases, select_all_crypto_from_db, select_all_info_about_crypto, \
-                                   select_buy_sell_info_about_crypto, add_coin_full, delete_coin_full, check_staking
+                                   select_buy_sell_info_about_crypto, add_coin_full, delete_coin_full, check_staking, \
+                                   change_coin_info
 from Scripts.Investments.db import update_db
 
 
@@ -32,9 +33,8 @@ class Investments(QWidget):
 
         self.currenc_tab_widget.addTab(self.tab_total, "Total")
         self.currenc_tab_widget.addTab(self.tab_binance, "Binance")
-        self.currenc_tab_widget.addTab(self.tab_raydium, "Raydium")
-        self.currenc_tab_widget.addTab(self.tab_pancake, "Pancake")
-        self.currenc_tab_widget.addTab(self.tab_xdrado, "Xdraco")
+        self.currenc_tab_widget.addTab(self.tab_raydium, "Pancakeswap")
+        self.currenc_tab_widget.addTab(self.tab_pancake, "Biswap")
 
         # -------------------------- TOTAL -------------------------- #
         Investments.total_tab_grid_setting(self)
@@ -274,6 +274,9 @@ class Investments(QWidget):
         ch_bs_combo_model = self.change_buy_sell_combo.model()
         ch_bs_combo_model.item(0).setEnabled(False)
 
+        self.change_id_label = QLabel("ID")
+        self.change_id_edit = QLineEdit()
+
         self.change_price_label = QLabel("New price")
         self.change_price_edit = QLineEdit()
 
@@ -281,14 +284,17 @@ class Investments(QWidget):
         self.change_value_edit = QLineEdit()
 
         self.change_new_staking_label = QLabel("New staking")
-        self.change_staking_edit = QLineEdit()
+        self.change_new_staking_edit = QLineEdit()
 
         self.change_old_staking_label = QLabel("Old staking")
         self.change_old_staking_edit = QLineEdit()
         self.change_old_staking_edit.setEnabled(False)
 
-        self.change_date_label = QLabel("Date")
+        self.change_date_label = QLabel("New date")
         self.change_date_edit = QLineEdit()
+
+        self.change_action_label = QLabel("New action")
+        self.change_action_edit = QLineEdit()
 
         self.change_show_button = QPushButton("Show")
         self.change_show_button.setMaximumWidth(40)
@@ -310,23 +316,29 @@ class Investments(QWidget):
         self.total_tab_change_window_grid.addWidget(self.change_show_button, 6, 1, 1, 1,
                                                  alignment=Qt.AlignTop | Qt.AlignCenter)
 
-        self.total_tab_change_window_grid.addWidget(self.change_price_label, 0, 3, 1, 1, alignment=Qt.AlignBottom)
-        self.total_tab_change_window_grid.addWidget(self.change_price_edit, 1, 3, 1, 1)
+        self.total_tab_change_window_grid.addWidget(self.change_id_label, 0, 3, 1, 1, alignment=Qt.AlignBottom)
+        self.total_tab_change_window_grid.addWidget(self.change_id_edit, 1, 3, 1, 1)
 
-        self.total_tab_change_window_grid.addWidget(self.change_value_label, 0, 5, 1, 1, alignment=Qt.AlignBottom)
-        self.total_tab_change_window_grid.addWidget(self.change_value_edit, 1, 5, 1, 1)
+        self.total_tab_change_window_grid.addWidget(self.change_price_label, 0, 5, 1, 1, alignment=Qt.AlignBottom)
+        self.total_tab_change_window_grid.addWidget(self.change_price_edit, 1, 5, 1, 1)
 
-        self.total_tab_change_window_grid.addWidget(self.change_new_staking_label, 2, 3, 1, 1, alignment=Qt.AlignBottom)
-        self.total_tab_change_window_grid.addWidget(self.change_staking_edit, 3, 3, 1, 1)
+        self.total_tab_change_window_grid.addWidget(self.change_value_label, 2, 3, 1, 1, alignment=Qt.AlignBottom)
+        self.total_tab_change_window_grid.addWidget(self.change_value_edit, 3, 3, 1, 1)
 
-        self.total_tab_change_window_grid.addWidget(self.change_date_label, 2, 5, 1, 1, alignment=Qt.AlignBottom)
-        self.total_tab_change_window_grid.addWidget(self.change_date_edit, 3, 5, 1, 1)
+        self.total_tab_change_window_grid.addWidget(self.change_action_label, 2, 5, 1, 1, alignment=Qt.AlignBottom)
+        self.total_tab_change_window_grid.addWidget(self.change_action_edit, 3, 5, 1, 1)
 
-        self.total_tab_change_window_grid.addWidget(self.change_old_staking_label, 4, 3, 1, 1, alignment=Qt.AlignBottom)
-        self.total_tab_change_window_grid.addWidget(self.change_old_staking_edit, 5, 3, 1, 1)
+        self.total_tab_change_window_grid.addWidget(self.change_new_staking_label, 4, 3, 1, 1, alignment=Qt.AlignBottom)
+        self.total_tab_change_window_grid.addWidget(self.change_new_staking_edit, 5, 3, 1, 1)
 
-        self.total_tab_change_window_grid.addWidget(self.change_all_button, 8, 3, 1, 2)
-        self.total_tab_change_window_grid.addWidget(self.change_cancel_button, 8, 5, 1, 2)
+        self.total_tab_change_window_grid.addWidget(self.change_date_label, 4, 5, 1, 1, alignment=Qt.AlignBottom)
+        self.total_tab_change_window_grid.addWidget(self.change_date_edit, 5, 5, 1, 1)
+
+        self.total_tab_change_window_grid.addWidget(self.change_old_staking_label, 6, 3, 1, 1, alignment=Qt.AlignBottom)
+        self.total_tab_change_window_grid.addWidget(self.change_old_staking_edit, 7, 3, 1, 1)
+
+        self.total_tab_change_window_grid.addWidget(self.change_all_button, 8, 3, 1, 2, alignment=Qt.AlignBottom)
+        self.total_tab_change_window_grid.addWidget(self.change_cancel_button, 8, 5, 1, 2, alignment=Qt.AlignBottom)
 
 
     def total_tab_buttons(self):
@@ -451,8 +463,10 @@ class Investments(QWidget):
 
         self.change_price_edit.setEnabled(F)
         self.change_date_edit.setEnabled(F)
-        self.change_staking_edit.setEnabled(F)
+        self.change_new_staking_edit.setEnabled(F)
         self.change_value_edit.setEnabled(F)
+        self.change_id_edit.setEnabled(F)
+        self.change_action_edit.setEnabled(F)
 
     def add_window_init(self):
 
@@ -732,9 +746,11 @@ class Investments(QWidget):
 
         self.change_buy_sell_combo.clear()
 
+        self.change_id_edit.clear()
         self.change_price_edit.clear()
         self.change_value_edit.clear()
-        self.change_staking_edit.clear()
+        self.change_new_staking_edit.clear()
+        self.change_action_edit.clear()
         self.change_date_edit.clear()
         self.change_old_staking_edit.clear()
         self.total_add_tab_item_model.setRowCount(0)
@@ -795,6 +811,28 @@ class Investments(QWidget):
         insert_data_to_all_tables(self.binance_item_model, self.binance_table_view)
 
         Investments.delete_cancel_button(self)
+
+        binance_diagram = Example(create_loop_diagram('binance'))
+        self.binance_tab_grid.addWidget(binance_diagram.chart_view, 0, 5, 0, 4)
+
+    def action_for_change_button(self):
+
+        exchange = self.change_exchange_combo.currentText()
+        cryptocurrency = self.change_cryptocur_combo.currentText()
+        crypto_id = self.change_id_edit.text()
+        new_price = self.change_price_edit.text()
+        new_count = self.change_value_edit.text()
+        new_action = self.change_action_edit.text()
+        new_staking = self.change_new_staking_edit.text()
+        new_date = self.change_date_edit.text()
+
+        change_coin_info(exchange, cryptocurrency, crypto_id, new_price, new_count, new_action, new_staking, new_date)
+
+        update_db()
+
+        insert_data_to_all_tables(self.binance_item_model, self.binance_table_view)
+
+        Investments.change_cancel_button(self)
 
         binance_diagram = Example(create_loop_diagram('binance'))
         self.binance_tab_grid.addWidget(binance_diagram.chart_view, 0, 5, 0, 4)
@@ -890,7 +928,7 @@ class Investments(QWidget):
 
         self.change_cancel_button.clicked.connect(lambda: Investments.change_cancel_button(self))
 
-        # self.change_all_button.clicked.connect(lambda: Investments.action_for_change_button(self))
+        self.change_all_button.clicked.connect(lambda: Investments.action_for_change_button(self))
 
 
 
@@ -1005,7 +1043,7 @@ class Investments(QWidget):
         self.total_tab_change_window_grid.setRowStretch(4, 1)
         self.total_tab_change_window_grid.setRowStretch(5, 1)
         self.total_tab_change_window_grid.setRowStretch(6, 1)
-        self.total_tab_change_window_grid.setRowStretch(7, 3)
+        self.total_tab_change_window_grid.setRowStretch(7, 1)
         self.total_tab_change_window_grid.setRowStretch(8, 1)
         self.total_tab_change_window_grid.setRowStretch(9, 1)
 

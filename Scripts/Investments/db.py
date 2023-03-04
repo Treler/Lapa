@@ -1,8 +1,18 @@
+import os
 from MySQLdb import connect
 from array import array
 from json import dumps
 from requests import get
 from bs4 import BeautifulSoup
+
+
+with open("ui_investments\\database.txt", "r", encoding="utf-8") as data:
+    lines = data.readlines()
+
+
+host = lines[0].strip()
+user = lines[1].strip()
+password = lines[2].strip()
 
 
 def update_db():
@@ -15,9 +25,9 @@ def update_db():
     for database in databases:
         try:
             with connect(
-                    host="your_host",
-                    user="user",
-                    password="password",
+                    host=host,
+                    user=user,
+                    password=password,
                     database=f"{database}"
             ) as connection:
                 with connection.cursor() as cursor:
@@ -85,9 +95,9 @@ def staking(database):
 
     try:
         with connect(
-                host="your_host",
-                user="user",
-                password="password",
+                host=host,
+                user=user,
+                password=password,
                 database="staking"
         ) as connection:
             with connection.cursor() as cursor:
@@ -165,10 +175,10 @@ def current_price(name):
     try:
         request = get(f"https://coinmarketcap.com/currencies/{name.lower().replace('_', '-')}")
 
-        with open("crypto.html", "w", encoding="utf-8") as file:
+        with open("Scripts\\Investments\\crypto.html", "w", encoding="utf-8") as file:
             file.write(request.text)
 
-        with open("crypto.html", "r", encoding="utf-8") as ready_file:
+        with open("Scripts\\Investments\\crypto.html", "r", encoding="utf-8") as ready_file:
             content = ready_file.read()
 
         soup = BeautifulSoup(content, "lxml")
@@ -177,6 +187,9 @@ def current_price(name):
 
     except Exception as ex:
         print(ex)
+
+    finally:
+        os.remove("Scripts\\Investments\\crypto.html")
 
     return float(price.text[1:].replace(",", ""))
 

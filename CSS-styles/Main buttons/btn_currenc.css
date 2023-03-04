@@ -10,12 +10,12 @@ QPushButton {
 }
 
 QPushButton:hover {
-    background: #FFFF52;
+    background: #ffff7a;
     color: black;
 }
 
 QPushButton:pressed {
-    background: #FFFF00;
+    background: #ffff52;
     border-style: inset;
     color: black;
 }

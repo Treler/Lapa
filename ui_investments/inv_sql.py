@@ -1,12 +1,21 @@
 from MySQLdb import connect
 
 
+with open("ui_investments\\database.txt", "r", encoding="utf-8") as data:
+    lines = data.readlines()
+
+
+host = lines[0].strip()
+user = lines[1].strip()
+password = lines[2].strip()
+
+
 def select_all_databases():
     try:
         with connect(
-                host="your_host",
-                user="user",
-                password="password"
+                host=host,
+                user=user,
+                password=password
         ) as connection:
             with connection.cursor() as cursor:
 
@@ -35,9 +44,9 @@ def select_all_crypto_from_db(database):
 
     try:
         with connect(
-                host="your_host",
-                user="user",
-                password="password",
+                host=host,
+                user=user,
+                password=password,
                 database=database
         ) as connection:
             with connection.cursor() as cursor:
@@ -62,9 +71,9 @@ def select_all_info_about_crypto(database, crypto):
 
     try:
         with connect(
-                host="your_host",
-                user="user",
-                password="password",
+                host=host,
+                user=user,
+                password=password,
                 database=database
         ) as connection:
             with connection.cursor() as cursor:
@@ -87,9 +96,9 @@ def select_buy_sell_info_about_crypto(database, crypto, action):
 
     try:
         with connect(
-                host="your_host",
-                user="user",
-                password="password"
+                host=host,
+                user=user,
+                password=password
         ) as connection:
             with connection.cursor() as cursor:
 
@@ -118,9 +127,9 @@ def add_coin_full(exchange, name_coin, count, date_trade, price, b_or_s, staking
 
     try:
         with connect(
-                host="your_host",
-                user="user",
-                password="password"
+                host=host,
+                user=user,
+                password=password
         ) as connection:
             with connection.cursor() as cursor:
 
@@ -130,7 +139,7 @@ def add_coin_full(exchange, name_coin, count, date_trade, price, b_or_s, staking
 
                 if exchange not in all_databases:
 
-                    create_database = f"CREATE DATABASE {exchange}"
+                    create_database = f"CREATE DATABASE IF NOT EXISTS {exchange}"
                     cursor.execute(create_database)
                     connection.commit()
 
@@ -146,7 +155,7 @@ def add_coin_full(exchange, name_coin, count, date_trade, price, b_or_s, staking
 
                 if name_coin not in all_tables:
 
-                    create_new_coin_table = f"CREATE TABLE {name_coin} ("\
+                    create_new_coin_table = f"CREATE TABLE IF NOT EXISTS {name_coin} ("\
                                             "id INT NOT NULL AUTO_INCREMENT,"\
                                             "Name_coin VARCHAR(30)," \
                                             "b_or_s VARCHAR(1)," \
@@ -166,10 +175,10 @@ def add_coin_full(exchange, name_coin, count, date_trade, price, b_or_s, staking
 
                     if staking != "-":
                         staking = float(staking)
-                        use_staking = "USE staking;"
+                        use_staking = "USE staking"
                         cursor.execute(use_staking)
 
-                        select_staking_tables = "SHOW TABLES;"
+                        select_staking_tables = "SHOW TABLES"
                         cursor.execute(select_staking_tables)
 
                         full = cursor.fetchall()
@@ -178,7 +187,7 @@ def add_coin_full(exchange, name_coin, count, date_trade, price, b_or_s, staking
 
                         if exchange not in all_staking_tables:
 
-                            create_new_exchange_table_staking = f"CREATE TABLE {exchange} ("\
+                            create_new_exchange_table_staking = f"CREATE TABLE IF NOT EXISTS {exchange} ("\
                                                                 "id INT NOT NULL AUTO_INCREMENT,"\
                                                                 "Name_coin VARCHAR(30)," \
                                                                 "count FLOAT," \
@@ -214,9 +223,9 @@ def delete_coin_full(exchange, name_coin, crypto_id):
 
     try:
         with connect(
-                host="your_host",
-                user="user",
-                password="password"
+                host=host,
+                user=user,
+                password=password
         ) as connection:
             with connection.cursor() as cursor:
 
@@ -227,7 +236,6 @@ def delete_coin_full(exchange, name_coin, crypto_id):
                 cursor.execute(delete_coin)
 
                 connection.commit()
-
 
     except Exception as ex:
         print(ex)
@@ -240,9 +248,9 @@ def check_staking(exchange, name_coin):
 
     try:
         with connect(
-                host="your_host",
-                user="user",
-                password="password"
+                host=host,
+                user=user,
+                password=password
         ) as connection:
             with connection.cursor() as cursor:
 
@@ -263,14 +271,48 @@ def check_staking(exchange, name_coin):
         cursor.close()
 
 
-# def change_coin_info(exchange, staking, name_coin, price, count, date, id, staking_change_edit_line):
-#
-#     # already get data from table and choice some coin
-#
-#     # add function with changing ONLY ONE PARAMETER
-#
-#     use_exchange = f"USE {exchange}"
-#     insert_new_data = f"UPDATE {name_coin} SET price = {price}, count = {count}, date = {date} WHERE id = {id}"
-#
-#     use_staking = f"USE {staking}"
-#     insert_new_data_staking = f"UPDATE {name_coin} SET count = {staking_change_edit_line}"
+def change_coin_info(exchange, name_coin, id, new_price, new_count, new_action, new_staking, new_date):
+
+    try:
+        with connect(
+                host=host,
+                user=user,
+                password=password
+        ) as connection:
+            with connection.cursor() as cursor:
+
+                use_exchange = f"USE {exchange}"
+                cursor.execute(use_exchange)
+
+                if new_price != "":
+                    update_price = f"UPDATE IGNORE {name_coin}  SET price = {float(new_price)} WHERE id = {int(id)}"
+                    cursor.execute(update_price)
+
+                if new_count != "":
+                    update_count = f"UPDATE IGNORE {name_coin}  SET count = {float(new_count)} WHERE id = {int(id)}"
+                    cursor.execute(update_count)
+
+                if new_action != "":
+                    update_action = f"UPDATE IGNORE {name_coin}  SET b_or_s = {new_action} WHERE id = {int(id)}"
+                    cursor.execute(update_action)
+
+                if new_date != "":
+                    update_date = f"UPDATE IGNORE {name_coin}  SET date_trade = {new_date} WHERE id = {int(id)}"
+                    cursor.execute(update_date)
+
+                if new_staking != "":
+
+                    use_staking = "USE staking"
+                    cursor.execute(use_staking)
+
+                    update_staking = f"UPDATE IGNORE {exchange} SET count = {float(new_staking)}" \
+                                     f" WHERE Name_coin = {name_coin}"
+                    cursor.execute(update_staking)
+
+                connection.commit()
+
+    except Exception as ex:
+        print(ex)
+
+    finally:
+        cursor.close()
