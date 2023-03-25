@@ -8,7 +8,7 @@ class LeftWidget(QWidget):
     # widget with main buttons which have actions
     def left_widget(self):
         self.leftWidget = QWidget()  # leftWidget #262F34
-        self.leftWidget.setStyleSheet(open("CSS-styles/Main widgets/left_widget.css").read())
+        self.leftWidget.setStyleSheet(open("css-styles/main_widgets/left_widget.css").read())
 
         self.leftGrid = QGridLayout(self.leftWidget)
 
@@ -29,7 +29,7 @@ class LeftWidget(QWidget):
 
         self.btn_weather = QPushButton("")
         icon6 = QIcon()
-        icon6.addFile(u"Pictures\\Weather\\weather.png")
+        icon6.addFile(u"pictures\\weather\\weather.png")
         self.btn_weather.setIcon(icon6)
         self.btn_weather.setIconSize(QSize(52, 52))
         self.btn_weather.setFlat(True)
@@ -40,7 +40,7 @@ class LeftWidget(QWidget):
 
         self.btn_birth = QPushButton("")
         icon5 = QIcon()
-        icon5.addFile(u"Pictures\\Birthdays\\celebrations.png")
+        icon5.addFile(u"pictures\\birthdays\\celebrations.png")
         self.btn_birth.setIcon(icon5)
         self.btn_birth.setIconSize(QSize(52, 52))
         self.btn_birth.setFlat(True)
@@ -50,7 +50,7 @@ class LeftWidget(QWidget):
 
         self.btn_currenc = QPushButton("")
         icon4 = QIcon()
-        icon4.addFile(u"Pictures\\Investments\\investments.png")
+        icon4.addFile(u"pictures\\investments\\investments.png")
         self.btn_currenc.setIcon(icon4)
         self.btn_currenc.setIconSize(QSize(52, 52))
         self.btn_currenc.setFlat(True)
@@ -59,7 +59,7 @@ class LeftWidget(QWidget):
 
         self.btn_passw = QPushButton("")
         icon3 = QIcon()
-        icon3.addFile(u"Pictures\\Passwords\\passwords.png")
+        icon3.addFile(u"pictures\\passwords\\passwords.png")
         self.btn_passw.setIcon(icon3)
         self.btn_passw.setIconSize(QSize(52, 52))
         self.btn_passw.setFlat(True)
@@ -68,18 +68,18 @@ class LeftWidget(QWidget):
 
         self.btn_books = QPushButton("")
         icon2 = QIcon()
-        icon2.addFile(u"Pictures\\Books\\books.png")
+        icon2.addFile(u"pictures\\books\\books.png")
         self.btn_books.setIcon(icon2)
         self.btn_books.setIconSize(QSize(52, 52))
         self.btn_books.setFlat(True)
         self.btn_books.setFont(font2)
         self.btn_books.setStyleSheet("color: rgb(255, 255, 255)")
 
-        self.btn_weather.setStyleSheet(open("CSS-styles/Main buttons/btn_weather.css").read())
-        self.btn_birth.setStyleSheet(open("CSS-styles/Main buttons/btn_birth.css").read())
-        self.btn_currenc.setStyleSheet(open("CSS-styles/Main buttons/btn_currenc.css").read())
-        self.btn_passw.setStyleSheet(open("CSS-styles/Main buttons/btn_passw.css").read())
-        self.btn_books.setStyleSheet(open("CSS-styles/Main buttons/btn_book.css").read())
+        self.btn_weather.setStyleSheet(open("css-styles/main_buttons/btn_weather.css").read())
+        self.btn_birth.setStyleSheet(open("css-styles/main_buttons/btn_birth.css").read())
+        self.btn_currenc.setStyleSheet(open("css-styles/main_buttons/btn_currenc.css").read())
+        self.btn_passw.setStyleSheet(open("css-styles/main_buttons/btn_passw.css").read())
+        self.btn_books.setStyleSheet(open("css-styles/main_buttons/btn_book.css").read())
 
         self.leftGrid.addWidget(self.btn_weather, 15, 0, 1, 5)
         self.leftGrid.addWidget(self.btn_birth, 16, 0, 1, 5)
@@ -92,7 +92,7 @@ class LeftWidget(QWidget):
 
     def photo_button(self):
         self.btn_photo = QPushButton()
-        self.btn_photo.setIcon(QIcon("Pictures/Profile_photos/current_avatar.jpg"))
+        self.btn_photo.setIcon(QIcon("pictures/profile_photos/current_avatar.jpg"))
         self.btn_photo.setIconSize(QSize(150, 150))
         self.btn_photo.setStyleSheet("QPushButton{background: transparent;}")
         self.leftGrid.addWidget(self.btn_photo, 0, 0, 1, 5, alignment=Qt.AlignCenter)

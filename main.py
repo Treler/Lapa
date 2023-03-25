@@ -3,8 +3,8 @@
 
 from sys import argv, exit
 from ui_interface import *
-from Scripts.Other.apl_functions import center, suppress_qt_warnings
-from ui_progress_bar.progress_bar import Ui_SplashScreen
+from apl_functions import center, suppress_qt_warnings
+from ui_progress_bar.frontend.progress_bar import Ui_SplashScreen
 from PyQt5 import QtTest, QtCore
 from PyQt5.QtCore import Qt, QThread
 from PyQt5.QtWidgets import QSplashScreen, QApplication
@@ -103,19 +103,19 @@ class MainWindow(QWidget):
         # navigate to Profile page
         self.ui.btn_photo.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.profile_widget))
 
-        # navigate to Weather page
+        # navigate to weather page
         self.ui.btn_weather.clicked.connect(lambda: self.btn_weather_click())
 
-        # navigate to Birthdays/Holidays page
+        # navigate to birthdays/Holidays page
         self.ui.btn_birth.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.birth_widget))
 
-        # navigate to Investments page
+        # navigate to investments page
         self.ui.btn_currenc.clicked.connect(lambda: self.btn_currenc_click())
 
-        # navigate to Passwords page
+        # navigate to passwords page
         self.ui.btn_passw.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.passw_widget))
 
-        # navigate to Books page
+        # navigate to books page
         self.ui.btn_books.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.books_widget))
 
         self.ui.open_close_side_bar_btn.clicked.connect(lambda: self.ui.omgShit())

@@ -2,12 +2,12 @@ from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QPixmap, QIcon, QFont
 from PyQt5.QtWidgets import QWidget, QPushButton, QGridLayout, QLabel, QFrame, QStackedWidget
 from ui_left_mainwidget import LeftWidget
-from ui_profile.profile import Profile
-from ui_weather.weather import Weather
-from ui_passwords.passwords import Passwords
-from ui_books.books import Books
-from ui_birthdays.birthdays import Birthdays
-from ui_investments.investments import Investments
+from ui_profile.frontend.profile import Profile
+from ui_weather.frontend.weather import Weather
+from ui_passwords.frontend.passwords import Passwords
+from ui_books.frontend.books import Books
+from ui_birthdays.frontend.birthdays import Birthdays
+from ui_investments.frontend.investments import Investments
 
 
 # main class which has key functions for this program
@@ -124,7 +124,7 @@ class Ui_MainWindow(QWidget):
         self.minimizeWindowButton = QPushButton()
         self.minimizeWindowButton.setObjectName(u"minimizeWindowButton")
         icon1 = QIcon()
-        icon1.addFile(u"Pictures\\Apl_icon\\minimize.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u"pictures\\apl_icons\\minimize.png", QSize(), QIcon.Normal, QIcon.Off)
         self.minimizeWindowButton.setIcon(icon1)
         self.minimizeWindowButton.setFlat(True)
 
@@ -132,7 +132,7 @@ class Ui_MainWindow(QWidget):
         self.restoreWindowButton = QPushButton()
         self.restoreWindowButton.setObjectName(u"restoreWindowButton")
         icon2 = QIcon()
-        icon2.addFile(u"Pictures\\Apl_icon\\restore.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon2.addFile(u"pictures\\apl_icons\\restore.png", QSize(), QIcon.Normal, QIcon.Off)
         self.restoreWindowButton.setIcon(icon2)
         self.restoreWindowButton.setFlat(True)
 
@@ -140,7 +140,7 @@ class Ui_MainWindow(QWidget):
         self.closeWindowButton = QPushButton()
         self.closeWindowButton.setObjectName(u"closeWindowButton")
         icon3 = QIcon()
-        icon3.addFile(u"Pictures\\Apl_icon\\exit.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u"pictures\\apl_icons\\exit.png", QSize(), QIcon.Normal, QIcon.Off)
         self.closeWindowButton.setIcon(icon3)
         self.closeWindowButton.setFlat(True)
 
@@ -159,7 +159,7 @@ class Ui_MainWindow(QWidget):
         font1.setBold(True)
         self.open_close_side_bar_btn.setFont(font1)
         icon = QIcon()
-        icon.addFile(u"Pictures\\align-left.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"pictures\\apl_icons\\align-left.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.open_close_side_bar_btn.setIcon(icon)
         self.open_close_side_bar_btn.setIconSize(QSize(32, 32))
         self.open_close_side_bar_btn.setFlat(True)
@@ -171,9 +171,9 @@ class Ui_MainWindow(QWidget):
 
 
 
-        self.left_header_frame.setStyleSheet(open("CSS-styles/Main widgets/left_widget.css").read())
-        self.central_header_frame.setStyleSheet(open("CSS-styles/Main widgets/left_widget.css").read())
-        self.right_header_frame.setStyleSheet(open("CSS-styles/Main widgets/left_widget.css").read())
+        self.left_header_frame.setStyleSheet(open("css-styles/main_widgets/left_widget.css").read())
+        self.central_header_frame.setStyleSheet(open("css-styles/main_widgets/left_widget.css").read())
+        self.right_header_frame.setStyleSheet(open("css-styles/main_widgets/left_widget.css").read())
 
         self.central_grid.addWidget(self.left_header_frame, 0, 0)
         self.central_grid.addWidget(self.central_header_frame, 0, 1, 1, 3)
@@ -183,7 +183,7 @@ class Ui_MainWindow(QWidget):
     def bottom_frames(self):
 
         self.bottom_frame = QFrame()
-        self.bottom_frame.setStyleSheet(open("CSS-styles/Main widgets/left_widget.css").read())
+        self.bottom_frame.setStyleSheet(open("css-styles/main_widgets/left_widget.css").read())
         self.bottom_frame_grid = QGridLayout(self.bottom_frame)
         self.bottom_frame_grid.setColumnStretch(0, 1)
         self.bottom_frame_grid.setColumnStretch(1, 1)
@@ -241,7 +241,7 @@ class Ui_MainWindow(QWidget):
         MainWindow.resize(1420, 880)
 
     def add_icon(self, MainWindow):
-        MainWindow.setWindowIcon(QIcon("Pictures\\Apl_icon\\apl_icon_now.png"))
+        MainWindow.setWindowIcon(QIcon("pictures/apl_icons\\apl_icon_now.png"))
 
     def omgShit(self):
 
@@ -249,11 +249,11 @@ class Ui_MainWindow(QWidget):
 
             self.central_grid.setColumnStretch(0, 4)
             self.F = True
-            self.btn_weather.setText('Weather')
+            self.btn_weather.setText('weather')
             self.btn_birth.setText('Celebrations')
-            self.btn_currenc.setText('Investments')
-            self.btn_passw.setText('Passwords')
-            self.btn_books.setText('Books')
+            self.btn_currenc.setText('investments')
+            self.btn_passw.setText('passwords')
+            self.btn_books.setText('books')
             self.btn_photo.show()
             self.nickname_label.show()
 
