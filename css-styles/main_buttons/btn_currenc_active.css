@@ -1,0 +1,10 @@
+QPushButton {
+    background-color: #ffff52;
+    border-style: inset;
+    border-width: 0px;
+    border-radius: 15px;
+    border-color: black;
+    font: bold 15px;
+    padding: 6px;
+    color: black;
+}

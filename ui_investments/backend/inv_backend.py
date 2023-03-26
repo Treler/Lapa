@@ -1,7 +1,7 @@
 from json import load, loads
 from random import choice
 from ui_investments.frontend.loop_diagram import Data
-from PyQt5.QtGui import QStandardItem, QImage
+from PyQt5.QtGui import QStandardItem, QImage, QColor
 from PyQt5.QtCore import QSortFilterProxyModel, Qt
 
 
@@ -23,8 +23,12 @@ def create_loop_diagram(exchange=""):
 def insert_data_to_all_tables(model, table):
     model.clear()
     heads = ("Coin", "Name", "Current price", "Staked", "Earn", "Total",
-                     "Avg purchase price", "Cap", "PNL (B/S)", "PNLE (B/S/E)")
+             "Avg buy price", "Cap", "PNL (B/S)", "PNLE (B/S/E)")
     model.setHorizontalHeaderLabels(heads)
+
+    all_pnl = []
+    all_pnle = []
+    count = 0
 
     databases = ("binance", )
     with open("ui_investments\\data\\inv_money_data.json", "r", encoding="utf-8") as f1:
@@ -39,8 +43,12 @@ def insert_data_to_all_tables(model, table):
             coin_total = str(all_data[database][coin]['Total'])
             coin_avg_price = "$" + str(all_data[database][coin]['Average'])
             coin_cap = "$" + str(all_data[database][coin]['Cap'])
-            coin_pnl = all_data[database][coin]['PNL'] + "%"
-            coin_pnl_staked = all_data[database][coin]['PNL Earn'] + "%"
+            coin_pnl = all_data[database][coin]['PNL']
+            coin_pnl_staked = all_data[database][coin]['PNL Earn']
+
+            all_pnl.append(float(coin_pnl))
+            all_pnle.append(float(coin_pnl_staked))
+            count += 1
 
             model.appendRow([ItemImage("", f"Pictures\\Investments\\Coins\\{coin.upper().replace('_', ' ')}.png"),
                              QStandardItem(coin_name),
@@ -50,12 +58,29 @@ def insert_data_to_all_tables(model, table):
                              QStandardItem(coin_total),
                              QStandardItem(coin_avg_price),
                              QStandardItem(coin_cap),
-                             QStandardItem(coin_pnl),
-                             QStandardItem(coin_pnl_staked),
+                             QStandardItem(coin_pnl + "%"),
+                             QStandardItem(coin_pnl_staked + "%"),
                              ])
 
     table.resizeColumnsToContents()
     table.resizeRowsToContents()
+
+    for row in range(count):
+
+        if all_pnl[row] >= 0:
+            model.item(row, 8).setBackground(QColor(156, 252, 156))
+
+        else:
+            model.item(row, 8).setBackground(QColor(252, 156, 156))
+
+        if all_pnle[row] >= 0:
+            model.item(row, 9).setBackground(QColor(156, 252, 156))
+
+        else:
+            model.item(row, 9).setBackground(QColor(252, 156, 156))
+
+        for col in range(10):
+            model.item(row, col).setTextAlignment(Qt.AlignCenter)
 
 
 class ItemImage(QStandardItem):

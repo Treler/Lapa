@@ -16,25 +16,28 @@ class Investments(QWidget):
     # function of cryptocurrencies, usd and eur widget
     def currencies_widget_window(self):
 
-        update_db()
+        # update_db()
         self.currenc_widget = QWidget()
         self.currenc_grid = QGridLayout(self.currenc_widget)
-        self.currenc_widget.setStyleSheet("background-color: rgb(140, 140, 140)")
+        # self.currenc_widget.setStyleSheet("background-color: rgb(140, 140, 140)")
 
         self.currenc_tab_widget = QTabWidget()
         self.tab_total = QWidget()
         self.tab_binance = QWidget()
-        self.tab_raydium = QWidget()
-        self.tab_pancake = QWidget()
-        self.tab_xdrado = QWidget()
+        self.tab_pancakeswap = QWidget()
+        self.tab_biswap = QWidget()
+
 
         self.counter_exc = 0
         self.counter_crypto = 0
 
         self.currenc_tab_widget.addTab(self.tab_total, "Total")
         self.currenc_tab_widget.addTab(self.tab_binance, "Binance")
-        self.currenc_tab_widget.addTab(self.tab_raydium, "Pancakeswap")
-        self.currenc_tab_widget.addTab(self.tab_pancake, "Biswap")
+        self.currenc_tab_widget.addTab(self.tab_pancakeswap, "Pancakeswap")
+        self.currenc_tab_widget.addTab(self.tab_biswap, "Biswap")
+
+        self.currenc_tab_widget.setStyleSheet(open("css-styles/buttons/investments/tab_buttons/all_tabs.css").read())
+
 
         # -------------------------- TOTAL -------------------------- #
         Investments.total_tab_grid_setting(self)
@@ -90,7 +93,7 @@ class Investments(QWidget):
 
         if param == 0:
             heads = ("Coin", "Name", "Current price", "Staked", "Earn", "Total",
-                     "Avg purchase price", "Cap", "PNL (B/S)", "PNLE (B/S/E)")
+                     "Avg buy price", "Cap", "PNL (B/S)", "PNLE (B/S/E)")
 
         elif param == 1:
             heads = ("Name", "B/S", "Count", "Price", "Date")

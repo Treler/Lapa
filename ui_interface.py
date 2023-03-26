@@ -54,6 +54,7 @@ class Ui_MainWindow(QWidget):
 
         # Configuration settings for main window
         self.main_frame_settings(MainWindow)
+        MainWindow.setStyleSheet("background-color: #262F34")
 
         # Add icon to header of program
         self.add_icon(MainWindow)
@@ -243,17 +244,17 @@ class Ui_MainWindow(QWidget):
     def add_icon(self, MainWindow):
         MainWindow.setWindowIcon(QIcon("pictures/apl_icons\\apl_icon_now.png"))
 
-    def omgShit(self):
+    def side_bar(self):
 
         if not self.F:
 
             self.central_grid.setColumnStretch(0, 4)
             self.F = True
-            self.btn_weather.setText('weather')
+            self.btn_weather.setText('Weather')
             self.btn_birth.setText('Celebrations')
-            self.btn_currenc.setText('investments')
-            self.btn_passw.setText('passwords')
-            self.btn_books.setText('books')
+            self.btn_currenc.setText('Investments')
+            self.btn_passw.setText('Passwords')
+            self.btn_books.setText('Books')
             self.btn_photo.show()
             self.nickname_label.show()
 

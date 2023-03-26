@@ -6,7 +6,6 @@ from ui_interface import *
 from apl_functions import center, suppress_qt_warnings
 from ui_progress_bar.frontend.progress_bar import Ui_SplashScreen
 from PyQt5 import QtTest, QtCore
-from PyQt5.QtCore import Qt, QThread
 from PyQt5.QtWidgets import QSplashScreen, QApplication
 
 def func1():
@@ -16,11 +15,11 @@ def func2():
     QtTest.QTest.qWait(200)
 
 
-class MyThread(QThread):
+class MyThread(QtCore.QThread):
     mysignal = QtCore.pyqtSignal(int, str)
 
     def __init__(self, parent=None):
-        QThread.__init__(self, parent)
+        QtCore.QThread.__init__(self, parent)
 
     def run(self):
         data1 = ["First", "Second"]
@@ -92,7 +91,7 @@ class MainWindow(QWidget):
             # Move window only when window is normal size
             # ###############################################
             # if left mouse button is clicked (Only accept left mouse button clicks)
-            if e.buttons() == Qt.LeftButton:
+            if e.buttons() == QtCore.Qt.LeftButton:
                 # Move window
                 self.move(self.pos() + e.globalPos() - self.clickPosition)
                 self.clickPosition = e.globalPos()
@@ -101,34 +100,62 @@ class MainWindow(QWidget):
     def actions_for_left_main_buttons(self):
 
         # navigate to Profile page
-        self.ui.btn_photo.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.profile_widget))
+        self.ui.btn_photo.clicked.connect(lambda: self.btn_profile_click())
 
         # navigate to weather page
         self.ui.btn_weather.clicked.connect(lambda: self.btn_weather_click())
 
         # navigate to birthdays/Holidays page
-        self.ui.btn_birth.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.birth_widget))
+        self.ui.btn_birth.clicked.connect(lambda: self.btn_birth_click())
 
         # navigate to investments page
         self.ui.btn_currenc.clicked.connect(lambda: self.btn_currenc_click())
 
         # navigate to passwords page
-        self.ui.btn_passw.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.passw_widget))
+        self.ui.btn_passw.clicked.connect(lambda: self.btn_passw_click())
 
         # navigate to books page
-        self.ui.btn_books.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.books_widget))
+        self.ui.btn_books.clicked.connect(lambda: self.btn_books_click())
 
-        self.ui.open_close_side_bar_btn.clicked.connect(lambda: self.ui.omgShit())
+        self.ui.open_close_side_bar_btn.clicked.connect(lambda: self.ui.side_bar())
+
+
+    def all_css(self):
+        self.ui.btn_weather.setStyleSheet(open("css-styles/main_buttons/btn_weather.css").read())
+        self.ui.btn_birth.setStyleSheet(open("css-styles/main_buttons/btn_birth.css").read())
+        self.ui.btn_currenc.setStyleSheet(open("css-styles/main_buttons/btn_currenc.css").read())
+        self.ui.btn_passw.setStyleSheet(open("css-styles/main_buttons/btn_passw.css").read())
+        self.ui.btn_books.setStyleSheet(open("css-styles/main_buttons/btn_book.css").read())
+
+
+    def btn_profile_click(self):
+        self.all_css()
+        self.ui.stackedWidget.setCurrentWidget(self.ui.profile_widget)
 
     def btn_weather_click(self):
-
+        self.all_css()
         self.ui.stackedWidget.setCurrentWidget(self.ui.weather_widget)
+        self.ui.btn_weather.setStyleSheet(open("css-styles/main_buttons/btn_weather_active.css").read())
 
-
+    def btn_birth_click(self):
+        self.all_css()
+        self.ui.stackedWidget.setCurrentWidget(self.ui.birth_widget)
+        self.ui.btn_birth.setStyleSheet(open("css-styles/main_buttons/btn_birth_active.css").read())
 
     def btn_currenc_click(self):
-
+        self.all_css()
         self.ui.stackedWidget.setCurrentWidget(self.ui.currenc_widget)
+        self.ui.btn_currenc.setStyleSheet(open("css-styles/main_buttons/btn_currenc_active.css").read())
+
+    def btn_passw_click(self):
+        self.all_css()
+        self.ui.stackedWidget.setCurrentWidget(self.ui.passw_widget)
+        self.ui.btn_passw.setStyleSheet(open("css-styles/main_buttons/btn_passw_active.css").read())
+
+    def btn_books_click(self):
+        self.all_css()
+        self.ui.stackedWidget.setCurrentWidget(self.ui.books_widget)
+        self.ui.btn_books.setStyleSheet(open("css-styles/main_buttons/btn_books_active.css").read())
 
 
 
