@@ -27,6 +27,8 @@ class Investments(QWidget):
         self.tab_pancakeswap = QWidget()
         self.tab_biswap = QWidget()
 
+        self.test = QWidget()
+
 
         self.counter_exc = 0
         self.counter_crypto = 0
